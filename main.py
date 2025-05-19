@@ -28,6 +28,7 @@ WEBHOOK_URL = os.getenv("WEBHOOK_URL", "https://install.liara.run/webhook")
 
 cl = Client()
 cl.set_settings({})
+print("SESSIONID IS:", SESSIONID)
 cl.login_by_sessionid(SESSIONID)
 
 print("[+] Listener started...")
