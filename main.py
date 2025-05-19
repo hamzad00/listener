@@ -4,23 +4,24 @@ import requests
 from flask import Flask
 from instagrapi import Client
 
-# Flask app
 app = Flask(__name__)
 
 @app.route("/")
 def health():
     return {"status": "Listener is running"}, 200
 
-# مقادیر ثابت کوکی
+# کوکی‌ها
 SESSIONID = "5813075928%3ArncCPvoeRflkXL63A4lK%3A3AiAYcHk"
 DS_USER_ID = "5813075928"
 CSRFTOKEN = "NmIGD2ArXvRCKk48DdRg8"
 WEBHOOK_URL = "https://install.liara.run/webhook"
 
-# ورود به اینستاگرام
+user_id = DS_USER_ID  # مستقیم از مقدار ثابت
+
 cl = Client()
 cl.set_settings({})
 cl.login_by_sessionid(SESSIONID)
+
 print("[*] Listener started...")
 
 last_checked = time.time()
@@ -48,7 +49,6 @@ def loop():
         check_messages()
         time.sleep(10)
 
-# اجرای هم‌زمان سرور و لیستنر
 from threading import Thread
 Thread(target=loop).start()
 app.run(host="0.0.0.0", port=5000)
