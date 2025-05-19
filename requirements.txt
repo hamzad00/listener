@@ -2,3 +2,4 @@ instagrapi
 requests
 python-dotenv
 flask
+Pillow>=8.1.1
