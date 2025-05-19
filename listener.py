@@ -1,3 +1,12 @@
+from flask import Flask
+import threading
+
+app = Flask(__name__)
+
+@app.route('/')
+def home():
+    return "Listener is running"
+
 import time
 import os
 import requests
@@ -42,10 +51,9 @@ def check_messages():
                     except Exception as e:
                         print(f"[!] Webhook error: {e}")
     last_checked = time.time()
-
 # اجرای دائم با sleep
 def loop():
-    while True:
+    while Tr
         check_messages()
         time.sleep(10)
 
@@ -54,3 +62,9 @@ if __name__ == '__main__':
     from threading import Thread
     Thread(target=loop).start()
     app.run(host='0.0.0.0', port=5000)
+    # اجرای فلask سرور در ترد جداگانه (برای لیارا)
+def run_flask():
+    app.run(host='0.0.0.0', port=5000)
+
+threading.Thread(target=run_flask).start()
+    
