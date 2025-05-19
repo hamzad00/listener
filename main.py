@@ -1,35 +1,26 @@
-import os
-import re
 import time
 import threading
 import requests
 from flask import Flask
 from instagrapi import Client
 
+# Flask app
 app = Flask(__name__)
 
 @app.route("/")
 def health():
     return {"status": "Listener is running"}, 200
 
-# گرفتن متغیرهای محیطی
-SESSIONID = os.getenv("IG_SESSIONID")
-DS_USER_ID = os.getenv("IG_USERID")
-CSRFTOKEN = os.getenv("IG_CSRFTOKEN")
-WEBHOOK_URL = os.getenv("WEBHOOK_URL", "https://install.liara.run/webhook")
+# مقادیر ثابت کوکی
+SESSIONID = "5813075928%3ArncCPvoeRflkXL63A4lK%3A3AiAYcHk"
+DS_USER_ID = "5813075928"
+CSRFTOKEN = "NmIGD2ArXvRCKk48DdRg8"
+WEBHOOK_URL = "https://install.liara.run/webhook"
 
-# بررسی معتبر بودن SESSIONID
-match = re.search(r"\d+", SESSIONID or "")
-if match:
-    user_id = match.group()
-else:
-    print("SESSIONID format is invalid.")
-    exit(1)
-
+# ورود به اینستاگرام
 cl = Client()
 cl.set_settings({})
 cl.login_by_sessionid(SESSIONID)
-
 print("[*] Listener started...")
 
 last_checked = time.time()
@@ -52,15 +43,12 @@ def check_messages():
                         print(f"[!] Webhook error: {e}")
     last_checked = time.time()
 
-# شروع بررسی پیام‌ها
 def loop():
     while True:
         check_messages()
         time.sleep(10)
 
-# اجرای Thread مستقل برای پیام‌ها
-threading.Thread(target=loop).start()
-
-# اجرای Flask روی 0.0.0.0:5000
-if __name__ == "__main__":
-    app.run(host="0.0.0.0", port=5000)
+# اجرای هم‌زمان سرور و لیستنر
+from threading import Thread
+Thread(target=loop).start()
+app.run(host="0.0.0.0", port=5000)
