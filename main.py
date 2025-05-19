@@ -53,7 +53,7 @@ def check_messages():
     last_checked = time.time()
 # اجرای دائم با sleep
 def loop():
-    while Tr
+    while True:
         check_messages()
         time.sleep(10)
 
