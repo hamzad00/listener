@@ -1,0 +1,8 @@
+{
+  "app": "instagpt-listener",
+  "port": 80,
+  "build": {
+    "location": "iran"
+  },
+  "disks": []
+}
