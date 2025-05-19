@@ -1,8 +1,8 @@
 {
   "platform": "python",
-  "app": "instagpt",
+  "app": "instagpt-listener",
   "port": 5000,
   "pythonVersion": "3.10",
   "buildCommand": "pip install -r requirements.txt",
-  "startCommand": "bash -c 'source .env && python main.py'"
+  "startCommand": "python main.py"
 }
